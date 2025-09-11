@@ -1,22 +1,28 @@
 // script.js
 window.addEventListener("load", function() {
+  const introVideo = document.getElementById("introVideo");
   const preloader = document.getElementById("preloader");
   const slideText = document.getElementById("slideText");
   const content = document.getElementById("content");
 
-  // Fade out preloader
-  preloader.style.opacity = "0";
+  // Show preloader first
+  preloader.style.display = "flex";
+  preloader.classList.remove("hidden");
+  preloader.style.opacity = "1";
+  slideText.style.display = "none";
+  if(content) content.style.display = "none";
 
+  // After preloader duration, show slideText (video stays as background)
   setTimeout(() => {
-    preloader.style.display = "none";
-    // Show sliding text
-    slideText.classList.remove("hidden");
-    slideText.classList.add("show");
-
-    // After sliding animation, show content (do not hide slideText)
+    preloader.style.opacity = "0";
     setTimeout(() => {
-      content.classList.remove("hidden");
-      // slideText remains visible
-    }, 1200); // 1s animation + 0.2s buffer
-  }, 500); // matches fade-out duration
+      preloader.style.display = "none";
+      slideText.classList.remove("hidden");
+      slideText.classList.add("show");
+      slideText.style.display = "flex";
+      setTimeout(() => {
+        if(content) content.classList.remove("hidden");
+      }, 1200);
+    }, 500);
+  }, 1200); // preloader duration
 });
