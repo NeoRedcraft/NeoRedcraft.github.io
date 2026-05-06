@@ -1,13 +1,1043 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="refresh" content="0; url=/portfolio/" />
-    <link rel="canonical" href="/portfolio/" />
-    <title>Redirecting…</title>
-    <script>location.replace('/portfolio/')</script>
-  </head>
-  <body>
-    If you are not redirected automatically, <a href="/portfolio/">click here</a>.
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NeoRedcraft — Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Mono:ital,wght@0,400;0,500;1,400&display=swap"
+    rel="stylesheet" />
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg: #0b0c0e;
+      --bg2: #111316;
+      --bg3: #1a1d22;
+      --border: rgba(255, 255, 255, 0.07);
+      --border-hover: rgba(255, 255, 255, 0.15);
+      --text: #f0efe8;
+      --muted: #888780;
+      --accent: #5dcaa5;
+      --accent2: #7f77dd;
+      --accent3: #ef9f27;
+      --mono: 'DM Mono', monospace;
+      --sans: 'Syne', sans-serif;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* --- HERO --- */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 6rem 2rem 4rem;
+      max-width: 900px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .hero::before {
+      content: '';
+      position: fixed;
+      top: -200px;
+      right: -200px;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(93, 202, 165, 0.06) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .tag {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--accent);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: fadeUp 0.6s ease forwards 0.1s;
+    }
+
+    .hero h1 {
+      font-size: clamp(3rem, 8vw, 6rem);
+      font-weight: 800;
+      line-height: 0.95;
+      letter-spacing: -0.03em;
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: fadeUp 0.6s ease forwards 0.2s;
+    }
+
+    .hero h1 span {
+      display: block;
+      color: var(--muted);
+    }
+
+    .hero-bio {
+      font-size: 1.1rem;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 520px;
+      margin-bottom: 3rem;
+      opacity: 0;
+      animation: fadeUp 0.6s ease forwards 0.35s;
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 2.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 3rem;
+      opacity: 0;
+      animation: fadeUp 0.6s ease forwards 0.45s;
+    }
+
+    .stat-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .stat-num {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .stat-label {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .hero-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.6s ease forwards 0.55s;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0.65rem 1.4rem;
+      border-radius: 6px;
+      font-family: var(--mono);
+      font-size: 13px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: all 0.2s;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #04342c;
+    }
+
+    .btn-primary:hover {
+      background: #9fe1cb;
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border-hover);
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    /* --- NAV --- */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 1.2rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(11, 12, 14, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-brand {
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--accent);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--text);
+    }
+
+    /* --- SECTION --- */
+    .section {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 6rem 2rem;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 1.5rem;
+      margin-bottom: 3.5rem;
+    }
+
+    .section-header h2 {
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .section-line {
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .section-count {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    /* --- FILTERS --- */
+    .filters {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 2.5rem;
+    }
+
+    .filter-btn {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      padding: 0.35rem 0.9rem;
+      border-radius: 100px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.2s;
+      text-transform: uppercase;
+    }
+
+    .filter-btn:hover,
+    .filter-btn.active {
+      background: var(--bg3);
+      border-color: var(--border-hover);
+      color: var(--text);
+    }
+
+    .filter-btn.active {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    /* --- REPO GRID --- */
+    .repo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .repo-card {
+      background: var(--bg);
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      transition: background 0.2s;
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+      position: relative;
+    }
+
+    .repo-card:hover {
+      background: var(--bg2);
+    }
+
+    .repo-card::after {
+      content: '↗';
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      font-size: 14px;
+      color: var(--muted);
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .repo-card:hover::after {
+      opacity: 1;
+    }
+
+    .repo-name {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text);
+      letter-spacing: -0.01em;
+      padding-right: 1.5rem;
+    }
+
+    .repo-desc {
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.55;
+      flex: 1;
+      font-family: var(--mono);
+    }
+
+    .repo-meta {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-top: auto;
+      padding-top: 0.75rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .repo-lang {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .lang-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .repo-stars,
+    .repo-forks {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .repo-star-icon {
+      font-size: 11px;
+    }
+
+    .repo-badge {
+      font-family: var(--mono);
+      font-size: 10px;
+      padding: 2px 8px;
+      border-radius: 100px;
+      border: 1px solid;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-left: auto;
+    }
+
+    .badge-fork {
+      border-color: rgba(127, 119, 221, 0.4);
+      color: var(--accent2);
+      background: rgba(127, 119, 221, 0.08);
+    }
+
+    .badge-source {
+      border-color: rgba(93, 202, 165, 0.3);
+      color: var(--accent);
+      background: rgba(93, 202, 165, 0.06);
+    }
+
+    .badge-archived {
+      border-color: rgba(136, 135, 128, 0.4);
+      color: var(--muted);
+      background: rgba(136, 135, 128, 0.08);
+    }
+
+    /* --- HIGHLIGHTS --- */
+    .highlights-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 2rem;
+      margin-bottom: 4rem;
+    }
+
+    @media (max-width: 600px) {
+      .highlights-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .highlight-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s, border-color 0.3s;
+    }
+
+    .highlight-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--border-hover);
+    }
+
+    .highlight-img-wrapper {
+      width: 100%;
+      height: 220px;
+      overflow: hidden;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .highlight-img-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .highlight-card:hover .highlight-img-wrapper img {
+      transform: scale(1.05);
+    }
+
+    .highlight-content {
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .highlight-content h3 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+      color: var(--text);
+      line-height: 1.3;
+    }
+
+    .highlight-content p {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+      flex: 1;
+    }
+
+    .highlight-links {
+      display: flex;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .highlight-links a {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--accent);
+      text-decoration: none;
+      border: 1px solid rgba(93, 202, 165, 0.3);
+      background: rgba(93, 202, 165, 0.06);
+      padding: 0.4rem 0.8rem;
+      border-radius: 100px;
+      transition: all 0.2s;
+    }
+
+    .highlight-links a:hover {
+      background: var(--accent);
+      color: #04342c;
+    }
+
+    .highlight-tech {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      border-top: 1px solid var(--border);
+      padding-top: 1rem;
+    }
+
+    .highlight-tech span {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--muted);
+      background: var(--bg3);
+      padding: 0.2rem 0.6rem;
+      border-radius: 4px;
+      text-transform: lowercase;
+    }
+
+    /* --- GIF IN HERO --- */
+    .hero-gif {
+      height: 150px;
+      width: auto;
+      max-width: 100%;
+      border-radius: 12px;
+      object-fit: cover;
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.6s ease forwards 0.15s;
+      border: 1px solid var(--border);
+      align-self: flex-start;
+    }
+
+    /* --- TOP REPOS FEATURED --- */
+    .featured-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1rem;
+      margin-bottom: 4rem;
+    }
+
+    .featured-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      transition: border-color 0.2s, transform 0.2s;
+      text-decoration: none;
+      color: inherit;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .featured-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .featured-card:hover {
+      border-color: var(--border-hover);
+      transform: translateY(-2px);
+    }
+
+    .featured-card:hover::before {
+      opacity: 1;
+    }
+
+    .featured-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* --- LOADING / ERROR --- */
+    .loading {
+      text-align: center;
+      padding: 4rem;
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .loading-dots::after {
+      content: '';
+      animation: dots 1.2s steps(3, end) infinite;
+    }
+
+    @keyframes dots {
+      0% {
+        content: '';
+      }
+
+      33% {
+        content: '.';
+      }
+
+      66% {
+        content: '..';
+      }
+
+      100% {
+        content: '...';
+      }
+    }
+
+    .error-msg {
+      background: rgba(226, 75, 74, 0.08);
+      border: 1px solid rgba(226, 75, 74, 0.2);
+      border-radius: 8px;
+      padding: 1.5rem;
+      font-family: var(--mono);
+      font-size: 13px;
+      color: #f09595;
+      text-align: center;
+    }
+
+    /* --- FOOTER --- */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 3rem 2rem;
+      max-width: 1000px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: gap;
+      gap: 1rem;
+    }
+
+    .footer-text {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    /* --- ANIMATIONS --- */
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(16px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .fade-in {
+      opacity: 0;
+      animation: fadeUp 0.5s ease forwards;
+    }
+
+    /* --- SCROLLBAR --- */
+    ::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--bg);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--bg3);
+      border-radius: 4px;
+    }
+
+    /* --- RESPONSIVE --- */
+    @media (max-width: 600px) {
+      .nav-links {
+        display: none;
+      }
+
+      .hero {
+        padding: 5rem 1.25rem 3rem;
+      }
+
+      .section {
+        padding: 4rem 1.25rem;
+      }
+
+      .hero-stats {
+        gap: 1.5rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav>
+    <a class="nav-brand" href="#">~/NeoRedcraft</a>
+    <ul class="nav-links">
+      <li><a href="#highlights">highlights</a></li>
+      <li><a href="#featured">featured</a></li>
+      <li><a href="#repos">all repos</a></li>
+      <li><a href="https://github.com/NeoRedcraft" target="_blank" rel="noopener">github ↗</a></li>
+    </ul>
+  </nav>
+
+  <section class="hero">
+    <span class="tag">// portfolio</span>
+    <h1>Felipe M. Panugan III<span>developer.</span></h1>
+    <p class="hero-bio" id="hero-bio">Loading profile…</p>
+    <div class="hero-stats" id="hero-stats"></div>
+    <div class="hero-links">
+      <a class="btn btn-primary" href="#highlights">view projects</a>
+      <a class="btn btn-ghost" href="https://github.com/NeoRedcraft" target="_blank" rel="noopener">github profile ↗</a>
+    </div>
+  </section>
+
+  <section class="section" id="highlights">
+    <div class="section-header">
+      <h2>project highlights</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="highlights-grid">
+      <!-- Project 1 -->
+      <div class="highlight-card fade-in" style="animation-delay: 0.1s;">
+        <div class="highlight-img-wrapper">
+          <img src="https://raw.githubusercontent.com/NeoRedcraft/Neoredcraft/main/AI2.png" alt="YOLOv12 Project">
+        </div>
+        <div class="highlight-content">
+          <h3>Classifying and Segmenting Multiple Ocular Diseases Using YOLOv12-seg</h3>
+          <p>A trained YOLOv12 model for classifying and segmenting retinal images in Cataract, Age-Related Macular
+            Disease, and Pathological Myopia.</p>
+          <div class="highlight-links">
+            <a href="https://github.com/NeoRedcraft/dl-project-1" target="_blank" rel="noopener">github ↗</a>
+            <a href="https://retinavision.streamlit.app/#detection-info" target="_blank" rel="noopener">website ↗</a>
+            <a href="https://www.researchgate.net/publication/403377182_A_Deep_Learning-Driven_Framework_for_Multi-Ocular_Disease_Classification_and_Instance_Segmentation_in_Retinal_Imaging"
+              target="_blank" rel="noopener">research paper ↗</a>
+          </div>
+          <div class="highlight-tech">
+            <span>python</span><span>google
+              colab</span><span>pytorch</span><span>tensorflow</span><span>numpy</span><span>pandas</span><span>keras</span><span>streamlit</span><span>kaggle</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Project 2 -->
+      <div class="highlight-card fade-in" style="animation-delay: 0.2s;">
+        <div class="highlight-img-wrapper">
+          <img src="https://raw.githubusercontent.com/NeoRedcraft/Neoredcraft/main/AI3.png" alt="RAG Chatbot Project">
+        </div>
+        <div class="highlight-content">
+          <h3>Retrieval-Augmented Qwen3-0.6B Chatbot</h3>
+          <p>Using Qwen/Qwen3 pretrained model to use for RAG system about Mental Health Evaluation and student support.
+          </p>
+          <div class="highlight-links">
+            <a href="https://github.com/NeoRedcraft/nlp-project-1" target="_blank" rel="noopener">github ↗</a>
+            <a href="https://blogio-production.up.railway.app/" target="_blank" rel="noopener">website ↗</a>
+          </div>
+          <div class="highlight-tech">
+            <span>python</span><span>google colab</span><span>hugging
+              face</span><span>streamlit</span><span>pinecone</span><span>kaggle</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Project 3 -->
+      <div class="highlight-card fade-in" style="animation-delay: 0.3s;">
+        <div class="highlight-img-wrapper">
+          <img src="https://raw.githubusercontent.com/NeoRedcraft/Neoredcraft/main/Websys.png"
+            alt="Cardinal Stage Project">
+        </div>
+        <div class="highlight-content">
+          <h3>Cardinal Stage</h3>
+          <p>A Centralized Partnership Platform for Mapúa Performing Organizations to manage their events, partnerships,
+            and collaborations effectively.</p>
+          <div class="highlight-links">
+            <a href="https://github.com/NeoRedcraft/websys_lab-project-1" target="_blank" rel="noopener">github ↗</a>
+            <a href="https://cardinalstage.onrender.com/" target="_blank" rel="noopener">website ↗</a>
+          </div>
+          <div class="highlight-tech">
+            <span>php</span><span>css</span><span>docker</span><span>supabase</span><span>render</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Project 4 -->
+      <div class="highlight-card fade-in" style="animation-delay: 0.4s;">
+        <div class="highlight-img-wrapper">
+          <img src="https://raw.githubusercontent.com/NeoRedcraft/Neoredcraft/main/App-dev.png"
+            alt="Monitoring Acquisition System">
+        </div>
+        <div class="highlight-content">
+          <h3>Monitoring Acquisition System</h3>
+          <p>Monitoring Acquisitions on a Library System for librarians' easy process of tracking and managing new book
+            purchases and inventory.</p>
+          <div class="highlight-links">
+            <a href="https://github.com/NeoRedcraft/App_dev_lab-project" target="_blank" rel="noopener">github ↗</a>
+          </div>
+          <div class="highlight-tech">
+            <span>react</span><span>typescript</span><span>vite</span><span>css</span><span>docker</span><span>supabase</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="featured">
+    <div class="section-header">
+      <h2>featured</h2>
+      <div class="section-line"></div>
+      <span class="section-count" id="featured-count"></span>
+    </div>
+    <div id="featured-container">
+      <div class="loading"><span class="loading-dots">fetching repos</span></div>
+    </div>
+  </section>
+
+  <section class="section" id="repos">
+    <div class="section-header">
+      <h2>all repositories</h2>
+      <div class="section-line"></div>
+      <span class="section-count" id="repos-count"></span>
+    </div>
+    <div class="filters" id="lang-filters"></div>
+    <div id="repos-container">
+      <div class="loading"><span class="loading-dots">fetching repos</span></div>
+    </div>
+  </section>
+
+  <footer>
+    <span class="footer-text">© 2025 NeoRedcraft — built with GitHub API</span>
+    <a class="btn btn-ghost" href="https://github.com/NeoRedcraft" target="_blank" rel="noopener"
+      style="font-size:12px; padding:0.4rem 1rem;">view on github ↗</a>
+  </footer>
+
+  <script>
+    const USERNAME = 'NeoRedcraft';
+    const API = 'https://api.github.com';
+
+    const LANG_COLORS = {
+      JavaScript: '#f7df1e', TypeScript: '#3178c6', Python: '#3776ab',
+      HTML: '#e34c26', CSS: '#563d7c', Vue: '#41b883', React: '#61dafb',
+      'C#': '#178600', 'C++': '#f34b7d', C: '#555555', Java: '#b07219',
+      Go: '#00add8', Rust: '#dea584', Ruby: '#701516', PHP: '#4f5d95',
+      Kotlin: '#a97bff', Swift: '#f05138', Shell: '#89e051', Lua: '#000080',
+      Dockerfile: '#384d54', SCSS: '#c6538c', default: '#888780'
+    };
+
+    function langColor(lang) {
+      return LANG_COLORS[lang] || LANG_COLORS.default;
+    }
+
+    function timeAgo(dateStr) {
+      const diff = Date.now() - new Date(dateStr);
+      const days = Math.floor(diff / 86400000);
+      if (days < 1) return 'today';
+      if (days < 30) return `${days}d ago`;
+      if (days < 365) return `${Math.floor(days / 30)}mo ago`;
+      return `${Math.floor(days / 365)}y ago`;
+    }
+
+    async function fetchAll(url) {
+      let results = [], page = 1;
+      while (true) {
+        const r = await fetch(`${url}?per_page=100&page=${page}`);
+        if (!r.ok) throw new Error(`GitHub API error: ${r.status}`);
+        const data = await r.json();
+        results = results.concat(data);
+        if (data.length < 100) break;
+        page++;
+      }
+      return results;
+    }
+
+    function repoCard(repo, featured = false) {
+      const card = document.createElement('a');
+      card.href = repo.html_url;
+      card.target = '_blank';
+      card.rel = 'noopener';
+      card.className = featured ? 'featured-card' : 'repo-card';
+
+      const badge = repo.fork
+        ? `<span class="repo-badge badge-fork">fork</span>`
+        : repo.archived
+          ? `<span class="repo-badge badge-archived">archived</span>`
+          : `<span class="repo-badge badge-source">source</span>`;
+
+      const langDot = repo.language
+        ? `<span class="lang-dot" style="background:${langColor(repo.language)}"></span>${repo.language}`
+        : '—';
+
+      card.innerHTML = `
+    ${featured ? '<span class="featured-label">★ most starred</span>' : ''}
+    <div class="repo-name">${repo.name}</div>
+    <div class="repo-desc">${repo.description || 'no description provided'}</div>
+    <div class="repo-meta">
+      <span class="repo-lang"><span class="lang-dot" style="background:${langColor(repo.language)}"></span>${repo.language || '—'}</span>
+      <span class="repo-stars">⭐ ${repo.stargazers_count}</span>
+      ${repo.forks_count > 0 ? `<span class="repo-forks">⑂ ${repo.forks_count}</span>` : ''}
+      <span style="font-family:var(--mono);font-size:10px;color:var(--muted);margin-left:auto;">${timeAgo(repo.updated_at)}</span>
+    </div>
+  `;
+      return card;
+    }
+
+    async function init() {
+      try {
+        const [profile, repos] = await Promise.all([
+          fetch(`${API}/users/${USERNAME}`).then(r => r.json()),
+          fetchAll(`${API}/users/${USERNAME}/repos`)
+        ]);
+
+        // Profile
+        const bioEl = document.getElementById('hero-bio');
+        bioEl.textContent = profile.bio || `Open source developer on GitHub. ${repos.length} public repositories.`;
+        document.title = `${profile.name || USERNAME} — Portfolio`;
+
+        // Stats
+        const statsEl = document.getElementById('hero-stats');
+        statsEl.innerHTML = `
+      <div class="stat-item">
+        <span class="stat-num">${repos.length}</span>
+        <span class="stat-label">repos</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">${repos.reduce((s, r) => s + r.stargazers_count, 0)}</span>
+        <span class="stat-label">total stars</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">${profile.followers ?? '—'}</span>
+        <span class="stat-label">followers</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">${repos.filter(r => !r.fork).length}</span>
+        <span class="stat-label">original</span>
+      </div>
+    `;
+
+        // Sort repos by stars
+        const sorted = [...repos].sort((a, b) => b.stargazers_count - a.stargazers_count);
+        const topRepos = sorted.filter(r => !r.fork && !r.archived).slice(0, 6);
+        const allRepos = sorted;
+
+        // Featured
+        const featuredContainer = document.getElementById('featured-container');
+        document.getElementById('featured-count').textContent = `${topRepos.length} pinned`;
+        if (topRepos.length === 0) {
+          featuredContainer.innerHTML = '<div class="error-msg">no source repos found</div>';
+        } else {
+          const grid = document.createElement('div');
+          grid.className = 'featured-grid';
+          topRepos.forEach((r, i) => {
+            const card = repoCard(r, true);
+            card.style.animationDelay = `${i * 0.07}s`;
+            card.classList.add('fade-in');
+            grid.appendChild(card);
+          });
+          featuredContainer.innerHTML = '';
+          featuredContainer.appendChild(grid);
+        }
+
+        // Language filter
+        const langs = ['all', ...new Set(allRepos.map(r => r.language).filter(Boolean))].sort();
+        const filtersEl = document.getElementById('lang-filters');
+        let activeLang = 'all';
+
+        function renderRepos() {
+          const filtered = activeLang === 'all'
+            ? allRepos
+            : allRepos.filter(r => r.language === activeLang);
+
+          document.getElementById('repos-count').textContent = `${filtered.length} repos`;
+
+          const container = document.getElementById('repos-container');
+          const grid = document.createElement('div');
+          grid.className = 'repo-grid';
+
+          filtered.forEach((r, i) => {
+            const card = repoCard(r);
+            card.style.animationDelay = `${Math.min(i, 12) * 0.04}s`;
+            card.classList.add('fade-in');
+            grid.appendChild(card);
+          });
+
+          container.innerHTML = '';
+          container.appendChild(grid);
+        }
+
+        langs.forEach(lang => {
+          const btn = document.createElement('button');
+          btn.className = 'filter-btn' + (lang === 'all' ? ' active' : '');
+          btn.textContent = lang === 'all' ? 'all' : lang;
+          if (lang !== 'all') {
+            const dot = document.createElement('span');
+            dot.className = 'lang-dot';
+            dot.style.cssText = `background:${langColor(lang)};display:inline-block;margin-right:5px;vertical-align:middle;`;
+            btn.prepend(dot);
+          }
+          btn.addEventListener('click', () => {
+            activeLang = lang;
+            filtersEl.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            renderRepos();
+          });
+          filtersEl.appendChild(btn);
+        });
+
+        renderRepos();
+
+      } catch (err) {
+        const msg = `<div class="error-msg">Could not load GitHub data: ${err.message}<br><br>Check the username or try again later.</div>`;
+        document.getElementById('featured-container').innerHTML = msg;
+        document.getElementById('repos-container').innerHTML = msg;
+        document.getElementById('hero-bio').textContent = 'GitHub profile — ' + USERNAME;
+      }
+    }
+
+    init();
+  </script>
+</body>
+
 </html>
